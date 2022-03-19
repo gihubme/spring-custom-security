@@ -1,0 +1,47 @@
+version: "3"
+services:
+  web:
+    env_file:
+      - ./scripts/env/dev.env
+    build: .
+    container_name: jwt-web
+    ports:
+      - "8080:8080"
+    depends_on:
+      - appdb
+    environment:
+      POSTGRES_SERVICE: appdb
+    networks:
+      - app-network
+  appdb:
+    image: postgres:14-alpine
+    container_name: jwt-db
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    env_file:
+      - ./scripts/env/dev.env
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+networks:
+  app-network:
+    driver: bridge
+volumes:
+  postgres_data:
+    driver: local
+
+
+#  docker-compose down    docker-compose up --build
+#  curl http://localhost:8180/auth/realms/SpringBootKeycloakApp/.well-known/openid-configuration
+#  http://localhost:8180/auth/realms/SpringBootKeycloakApp/protocol/openid-connect/auth?response_type=code&client_id=SpringBootApp&redirect_uri=http://localhost:8080/home
+
+#  https://localhost:8080/home?session_state=b6774a75-5930-480d-8ff4-5fa38b003840&code=bebd398c-3a99-4c3d-9226-350505537ff2:
+#  b6774a75-5930-480d-8ff4-5fa38b003840:
+#  657bbcb4-b640-4f92-b335-593efefabec8:
+#  docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' jwt-web
+#  docker exec -it $containerName psql  -p 5432 -U postgres -d acleaneva_database
+#  docker exec -it jwt-web bash
+#  curl --location --request GET 'http://localhost:8080/p/fromip'
+

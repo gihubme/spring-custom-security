@@ -1,0 +1,977 @@
+{
+	"info": {
+		"_postman_id": "a7b44b76-f067-45cf-84fe-717fea441ee9",
+		"name": "jwt-spring",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "userApi",
+			"item": [
+				{
+					"name": "me",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/api/me",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updatePassword",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"password\": \"new123\",\n    \"password2\": \"new123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/api/updatePassword",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"updatePassword"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateEmail",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var ind=parseInt(pm.environment.get('counter'))+1;",
+									"pm.environment.set('counter', ind);",
+									"pm.environment.set('testemailCurr', 'wpoven+'+pm.environment.get('counter')+'@test.com');"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"{{testemailCurr}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/api/updateEmail",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"updateEmail"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "logout",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"token\": \"{{access_token}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/api/logout",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{access_token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "apiKey-dev",
+			"item": [
+				{
+					"name": "users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/d/users?role=ROLE_USER&code=firstorg",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"d",
+								"users"
+							],
+							"query": [
+								{
+									"key": "role",
+									"value": "ROLE_USER"
+								},
+								{
+									"key": "code",
+									"value": "firstorg"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "users",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var ind=parseInt(pm.environment.get('counter'))+1;",
+									"pm.environment.set('counter', ind);",
+									"pm.environment.set('testemailCurr', 'wpoven+'+counter+'@test.com');",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"{{testemailCurr}}\",\n  \"password\": \"123123\",\n  \"organizationCode\":\"{{1stOrg}}\",\n  \"roles\": [\n        \"ROLE_USER\"\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/d/users",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"d",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "usersAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/d/users",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"d",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "usersActivate",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/d/users/3/activate",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"d",
+								"users",
+								"3",
+								"activate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "usersDeactivate",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/d/users/3/deactivate",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"d",
+								"users",
+								"3",
+								"deactivate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "usersDelete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/d/users/3/delete",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"d",
+								"users",
+								"3",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "organizations",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/d/organizations?code=firstorg",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"d",
+								"organizations"
+							],
+							"query": [
+								{
+									"key": "code",
+									"value": "firstorg"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "organizations",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"3rdOrg\",\n    \"code\":\"3rdorg\",\n    \"organizationAllowsUsers\":true,\n    \"active\":true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/d/organizations",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"d",
+								"organizations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "organizationsAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/d/organizations",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"d",
+								"organizations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "organizationsAllowUsers",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/d/organizations/3/allowUsers",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"d",
+								"organizations",
+								"3",
+								"allowUsers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "organizationsDisallowUsers",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/d/organizations/3/disallowUsers",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"d",
+								"organizations",
+								"3",
+								"disallowUsers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "organizationsActivate",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/d/organizations/3/activate",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"d",
+								"organizations",
+								"3",
+								"activate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "organizationsDeactivate",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/d/organizations/3/deactivate",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"d",
+								"organizations",
+								"3",
+								"deactivate"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "apikey",
+				"apikey": [
+					{
+						"key": "value",
+						"value": "DEVSECRET g2TEw6kmm4MzPRVNZVz8U79H72wbNumyeOErYglmqOJN4i8fbngHmYwtGW154wCuDs+lMLqiO9daSfwclP3kGw==",
+						"type": "string"
+					},
+					{
+						"key": "key",
+						"value": "DEVSECRET",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "checkEmailAvailability",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/p/checkEmailAvailability?code={{1stOrg}}&email=tom@yahoo.com",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"p",
+								"checkEmailAvailability"
+							],
+							"query": [
+								{
+									"key": "code",
+									"value": "{{1stOrg}}"
+								},
+								{
+									"key": "email",
+									"value": "tom@yahoo.com"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "signup",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var ind=parseInt(pm.environment.get('counter'))+1;",
+									"pm.environment.set('counter', ind);",
+									"pm.environment.set('testemailCurr', 'wpoven+'+pm.environment.get('counter')+'@test.com');"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"organizationCode\": \"{{1stOrg}}\",\n    \"email\": \"{{testemailCurr}}\",\n    \"password\": \"123123\",\n    \"name\": \"alice2\",\n    \"roles\": [\n        \"ROLE_USER\"\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/p/signup",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"p",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "emailValidation",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/p/evalid?token=dd086107-d8be-4678-966a-66aa8e591219",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"p",
+								"evalid"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "dd086107-d8be-4678-966a-66aa8e591219"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "resendValidationEmail",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"{{testemailCurr}}\",\n    \"organizationCode\":\"{{1stOrg}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/p/resendValidationEmail",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"p",
+								"resendValidationEmail"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "signin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response_json = pm.response.json();",
+									"var tokenA = response_json.accessToken;",
+									"pm.environment.set('access_token', tokenA);",
+									"var tokenR = response_json.refreshToken;",
+									"pm.environment.set('refresh_token', tokenR);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"{{testemailCurr}}\",\n  \"password\": \"123123\",\n  \"organizationCode\":\"{{1stOrg}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/p/signin",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"p",
+								"signin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "refreshToken_1stOrg",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response_json = pm.response.json();",
+									"var tokenA = response_json.accessToken;",
+									"pm.environment.set('access_token', tokenA);",
+									"var tokenR = response_json.refreshToken;",
+									"pm.environment.set('refresh_token', tokenR);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"refreshToken\": \"{{refresh_token}}\",\n  \"organizationCode\":\"{{1stOrg}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/p/refresh",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"p",
+								"refresh"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "pforget",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"password\": \"123123\",\n  \"password2\":\"123123\",\n  \"email\":\"{{testemailCurr}}\",\n  \"organizationCode\": \"{{1stOrg}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/p/pforget?token=bede7b4a-0768-47f5-b632-7c99be2dbd34",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"p",
+								"pforget"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "bede7b4a-0768-47f5-b632-7c99be2dbd34"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "pforget",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\":\"{{testemailCurr}}\",\n  \"organizationCode\": \"{{1stOrg}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/p/pforget",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"p",
+								"pforget"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "echangeStop",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\":{{testemailCurr}},\n  \"organizationCode\": \"{{1stOrg}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/p/echangeStop?token=",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"p",
+								"echangeStop"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "fromip",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/p/fromip",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"p",
+								"fromip"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "test",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{server}}/api/firstorg/u/test",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"api",
+						"firstorg",
+						"u",
+						"test"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
