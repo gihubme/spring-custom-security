@@ -9,8 +9,16 @@
 /node/
 node_tmp/
 node_modules/
+**/node/
+**/node_tmp/
+**/node_modules/
 npm-debug.log.*
 
+**/.angular/cache
+**/.sass-cache
+/connect.lock
+/coverage
+/libpeerconnection.log
 ######################
 # SASS
 ######################

@@ -30,7 +30,6 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
-@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/" + AppUrlConstants.DEVADMIN_URL)
 public class DevadminController {

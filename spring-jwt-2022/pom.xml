@@ -103,6 +103,14 @@
             <scope>test</scope>
         </dependency>
 
+
+        <dependency>
+            <groupId>org.eunnn4.spring-custom-security</groupId>
+            <artifactId>frontend</artifactId>
+            <version>${project.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+
     </dependencies>
 
     <build>
